@@ -1,8 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import {registerSW} from "virtual:pwa-register";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
+
+// Регистрация сервис-воркера
+if ('serviceWorker' in navigator) {
+  registerSW()
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
