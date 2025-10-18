@@ -1,5 +1,5 @@
 // src/services/api.ts
-import { Cepheid } from '../types/api';
+import type { Cepheid } from '../types/api';
 
 const MOCK_CEPHEIDS: Cepheid[] = [
   {

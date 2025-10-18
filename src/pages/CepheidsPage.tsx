@@ -1,7 +1,7 @@
-import { FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { Container, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Cepheid } from '../types';
+import type { Cepheid } from '../types/index';
 import { cepheidService } from '../services/api';
 import { ROUTES, ROUTE_LABELS } from '../Routes';
 import Breadcrumbs from '../components/Breadcrumbs';

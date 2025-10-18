@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../Routes';

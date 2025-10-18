@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import { Breadcrumb } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES, ROUTE_LABELS } from '../Routes';
-import { Breadcrumb as BreadcrumbType } from '../types';
+import type { Breadcrumb as BreadcrumbType } from '../types/index';
 
 interface BreadcrumbsProps {
   crumbs: BreadcrumbType[];

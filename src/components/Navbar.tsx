@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Navbar as BootstrapNavbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { ROUTES, ROUTE_LABELS } from '../Routes';

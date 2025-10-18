@@ -1,7 +1,7 @@
 // src/components/CepheidCard.tsx
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { Cepheid } from '../types';
+import type { Cepheid } from '../types/index';
 import { useImageWithFallback } from '../hooks/useImageWithFallback';
 
 interface CepheidCardProps {
