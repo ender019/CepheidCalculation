@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import CepheidsPage from './pages/CepheidsPage';
@@ -7,7 +7,7 @@ import { ROUTES } from './Routes';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter basename='/Gilyazetdinov-RIP2025F'>
       <div className="App">
         <Navbar />
         <Routes>
@@ -16,7 +16,7 @@ function App() {
           <Route path={`${ROUTES.CEPHEID}/:id`} element={<CepheidDetailPage />} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

@@ -2,13 +2,11 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
 import mkcert from 'vite-plugin-mkcert'
-import fs from 'fs'
-import path from 'path'
 
 export default defineConfig({
   plugins: [
-    mkcert(),
     react(),
+    // mkcert(),
     VitePWA({
       registerType: 'autoUpdate',
       devOptions: {
@@ -17,7 +15,7 @@ export default defineConfig({
       manifest: {
         name: "Cepheid App",
         short_name: "Cepheid",
-        start_url: "/RepoName/",
+        start_url: "/Gilyazetdinov-RIP2025F/",
         display: "standalone",
         background_color: "#fdfdfd",
         theme_color: "#db4938",
@@ -37,12 +35,10 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/RepoName/", 
+  base: "/Gilyazetdinov-RIP2025F/", 
   server: {
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    },
+    host: true, // Добавьте эту строку
+    port: 3000,
     proxy: {
       '/api/v1': {
         target: 'http://localhost:8080',
@@ -53,6 +49,5 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
-    port: 3000,
   },
 })

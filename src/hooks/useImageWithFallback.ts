@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useImageWithFallback = (initialSrc: string, fallbackSrc: string = '/img/default-star.jpg') => {
+export const useImageWithFallback = (initialSrc: string, fallbackSrc: string = '/Gilyazetdinov-RIP2025F/img/default-star.jpg') => {
   const [src, setSrc] = useState(initialSrc);
   const [hasError, setHasError] = useState(false);
 
