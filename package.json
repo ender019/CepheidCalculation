@@ -2,7 +2,7 @@
   "homepage": "https://ender019.github.io/Gilyazetdinov-RIP2025F",
   "name": "cepheid-calc-front",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,6 +1,6 @@
 export const ROUTES = {
   HOME: "/",
-  CEPHEIDS: "/cepheids",
+  CEPHEIDS: "/cepheid",
   CEPHEID: "/cepheid",
 } as const;
 

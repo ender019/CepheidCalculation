@@ -5,7 +5,6 @@ export const store = configureStore({
     reducer: {
         filters: filtersReducer,
     },
-    devTools: import.meta.env.MODE !== 'production',
 });
 
 export type RootState = ReturnType<typeof store.getState>;

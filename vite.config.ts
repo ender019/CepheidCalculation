@@ -6,10 +6,6 @@ export default defineConfig({
   base: "/Gilyazetdinov-RIP2025F", 
   server: {
     port: 3000,
-    // https:{
-    //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-    //   cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    // },
     proxy: {
       '/api/v1': {
         target: 'http://localhost:8080',
@@ -32,7 +28,7 @@ export default defineConfig({
       manifest: {
         name: "Cepheid App",
         short_name: "Cepheid",
-        start_url: "/Gilyazetdinov-RIP2025F/",
+        start_url: "/Gilyazetdinov-RIP2025F",
         display: "standalone",
         background_color: "#fdfdfd",
         theme_color: "#db4938",
