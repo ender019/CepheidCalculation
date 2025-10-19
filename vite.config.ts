@@ -1,9 +1,27 @@
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
-import mkcert from 'vite-plugin-mkcert'
 
 export default defineConfig({
+  base: "/Gilyazetdinov-RIP2025F/", 
+  server: {
+    host: true,
+    port: 3000,
+    // https:{
+    //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
+    //   cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
+    // },
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+      '/static': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+      },
+    },
+  },
   plugins: [
     react(),
     // mkcert(),
@@ -35,19 +53,4 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/Gilyazetdinov-RIP2025F/", 
-  server: {
-    host: true, // Добавьте эту строку
-    port: 3000,
-    proxy: {
-      '/api/v1': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-      },
-      '/static': {
-        target: 'http://localhost:9000',
-        changeOrigin: true,
-      },
-    },
-  },
 })

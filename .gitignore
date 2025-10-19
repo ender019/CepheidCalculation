@@ -9,7 +9,7 @@ lerna-debug.log*
 
 node_modules
 dev-dist
-assets
+/src/assets/
 public
 dist
 dist-ssr
@@ -25,3 +25,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+tsconfig.node.tsbuildinfo
+vite.config.d.ts
+vite.config.js
+
+ca.key
+ca.crt
+cert.key
+cert.crt
