@@ -105,7 +105,6 @@ h1, h2, h3, h4 {
   }
 }
 
-/* Search section - исправленная */
 .search-section {
   margin-bottom: 2rem;
   width: 100%;
@@ -114,6 +113,29 @@ h1, h2, h3, h4 {
 .search-section .search-form {
   display: flex;
   width: 100%;
+}
+.search-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 15px;
+}
+
+.clear-search-btn {
+  background-color: var(--btn-secondary-bg);
+  color: var(--text-light);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  font-family: 'Lato', sans-serif;
+}
+
+.clear-search-btn:hover {
+  background-color: var(--btn-secondary-hover-bg);
 }
 
 .search-section .search-input {
@@ -143,7 +165,6 @@ h1, h2, h3, h4 {
   background-color: var(--btn-primary-hover-bg);
 }
 
-/* Адаптивность поисковой формы */
 @media (max-width: 768px) {
   .search-section .search-form {
     flex-direction: column;
@@ -180,7 +201,7 @@ h1, h2, h3, h4 {
 /* Сетка цефеид */
 .cepheids-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 20px;
   margin-bottom: 30px;
 }
