@@ -3,9 +3,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: "/Gilyazetdinov-RIP2025F/", 
+  base: "/Gilyazetdinov-RIP2025F", 
   server: {
-    host: true,
     port: 3000,
     // https:{
     //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),

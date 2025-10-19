@@ -1,6 +1,11 @@
 .breadcrumb {
   padding: 1rem 0;
   margin-bottom: 1rem;
+  background-color: transparent;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  color: var(--text-muted);
 }
 
 .breadcrumb-item a {
@@ -10,8 +15,30 @@
 
 .breadcrumb-item a:hover {
   text-decoration: underline;
+  color: var(--primary-blue);
 }
 
 .breadcrumb-item.active {
   color: var(--text-muted);
+}
+
+/* Адаптивность для breadcrumbs */
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding: 0.8rem 0;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .breadcrumb {
+    padding: 0.6rem 0;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+  }
+  
+  .breadcrumb-item + .breadcrumb-item::before {
+    padding: 0 6px;
+  }
 }

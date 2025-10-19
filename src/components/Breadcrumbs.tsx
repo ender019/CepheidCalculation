@@ -3,6 +3,7 @@ import { Breadcrumb } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES, ROUTE_LABELS } from '../Routes';
 import type { Breadcrumb as BreadcrumbType } from '../types/index';
+import './Breadcrumbs.css'
 
 interface BreadcrumbsProps {
   crumbs: BreadcrumbType[];
