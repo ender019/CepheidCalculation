@@ -1,41 +1,6 @@
 // src/services/api.ts
 import type { Cepheid } from '../types/api';
-
-const MOCK_CEPHEIDS: Cepheid[] = [
-  {
-    id: "1",
-    title: "Классические цефеиды",
-    img: "/img/cepheid1.jpg",
-    period: 5.37,
-    source: "Хаббл",
-    description: "Классические цефеиды — это переменные звёзды, которые используются для измерения расстояний во Вселенной благодаря четкой зависимости период-светимость.",
-    mv: 15.5,
-    asw: -3.5,
-    distance: 750000
-  },
-  {
-    id: "2",
-    title: "Цефея V2",
-    img: "/img/cepheid2.jpg",
-    period: 3.82,
-    source: "Хаббл",
-    description: "Цефеида в галактике Треугольника с хорошо изученными характеристиками.",
-    mv: 16.2,
-    asw: -3.2,
-    distance: 850000
-  },
-  {
-    id: "3", 
-    title: "Дельта Цефея",
-    img: "/img/cepheid3.jpg",
-    period: 5.366,
-    source: "ESO",
-    description: "Прототип цефеид, используемый для калибровки шкалы расстояний.",
-    mv: 3.5,
-    asw: -3.9,
-    distance: 887
-  }
-];
+import { MOCK_CEPHEIDS } from './datas';
 
 const prefix = '/api/v1'
 

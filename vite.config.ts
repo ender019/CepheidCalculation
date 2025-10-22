@@ -2,18 +2,22 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
 
+const host = '192.168.43.245'
+
 export default defineConfig({
   base: "/Gilyazetdinov-RIP2025F", 
   server: {
     port: 3000,
     proxy: {
       '/api/v1': {
-        target: 'http://localhost:8080',
+        target: `http://${host}:8080`,
         changeOrigin: true,
+        secure: false
       },
       '/static': {
-        target: 'http://localhost:9000',
+        target: `http://${host}:9000`,
         changeOrigin: true,
+        secure: false
       },
     },
   },
