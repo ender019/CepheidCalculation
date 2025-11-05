@@ -2,7 +2,7 @@
 import type { Cepheid } from '../types/api';
 import { MOCK_CEPHEIDS } from './datas';
 
-const prefix = '/api/v1'
+const prefix = 'http://172.20.10.4:3000/api/v1'
 
 // Базовые функции для работы с API
 const apiRequest = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
