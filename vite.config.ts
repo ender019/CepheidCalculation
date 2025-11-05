@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
 
-const host = '192.168.43.245'
+const host = '172.20.10.4'
 
 export default defineConfig({
   base: "/Gilyazetdinov-RIP2025F", 

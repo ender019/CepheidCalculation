@@ -22,27 +22,33 @@ const CepheidsPage: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    loadCepheids();
     // Восстанавливаем поисковый запрос из Redux при загрузке
     if (activeFilters.titile) {
       setSearchQuery(activeFilters.titile);
     }
+    
+    // Загружаем данные в зависимости от наличия фильтров
+    if (activeFilters.titile && activeFilters.titile.trim() !== '') {
+      loadCepheidsWithFilter(activeFilters.titile);
+    } else {
+      loadCepheids();
+    }
   }, []);
 
-  // Фильтрация цефеид при изменении Redux фильтров
+  // Обрабатываем изменения фильтров
   useEffect(() => {
-    const query = activeFilters.titile || '';
-    if (query.trim() === '') {
-      setFilteredCepheids(cepheids);
+    if (activeFilters.titile && activeFilters.titile.trim() !== '') {
+      loadCepheidsWithFilter(activeFilters.titile);
     } else {
-      const filtered = cepheids.filter(cepheid =>
-        cepheid.title.toLowerCase().includes(query.toLowerCase()) ||
-        cepheid.source.toLowerCase().includes(query.toLowerCase()) ||
-        cepheid.period.toString().includes(query)
-      );
-      setFilteredCepheids(filtered);
+      // Если фильтр очистили, загружаем все данные
+      if (cepheids.length === 0) {
+        loadCepheids();
+      } else {
+        // Или просто показываем все загруженные данные
+        setFilteredCepheids(cepheids);
+      }
     }
-  }, [cepheids, activeFilters]);
+  }, [activeFilters, cepheids]);
 
   const loadCepheids = async () => {
     setLoading(true);
@@ -50,6 +56,7 @@ const CepheidsPage: FC = () => {
     try {
       const data = await cepheidService.getCepheids();
       setCepheids(data);
+      setFilteredCepheids(data);
     } catch (err) {
       console.error('Ошибка загрузки цефеид:', err);
       setError('Не удалось загрузить данные цефеид');
@@ -58,9 +65,41 @@ const CepheidsPage: FC = () => {
     }
   };
 
+  const loadCepheidsWithFilter = async (query: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      // Предполагаем, что у cepheidService есть метод getCepheidsByFilter
+      const data = await cepheidService.getCepheidsByFilter({ query });
+      setFilteredCepheids(data);
+      
+      // Также обновляем основной список, если нужно
+      if (cepheids.length === 0) {
+        setCepheids(data);
+      }
+    } catch (err) {
+      console.error('Ошибка загрузки отфильтрованных цефеид:', err);
+      setError('Не удалось загрузить отфильтрованные данные');
+      
+      // Fallback: фильтруем локально, если API не поддерживает фильтрацию
+      const filtered = cepheids.filter(cepheid =>
+        cepheid.title.toLowerCase().includes(query.toLowerCase()) ||
+        cepheid.source.toLowerCase().includes(query.toLowerCase()) ||
+        cepheid.period.toString().includes(query)
+      );
+      setFilteredCepheids(filtered);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(setFilters({ titile: searchQuery }));
+    if (searchQuery.trim() === '') {
+      dispatch(clearFilters());
+    } else {
+      dispatch(setFilters({ titile: searchQuery }));
+    }
   };
 
   const handleClearSearch = () => {
@@ -85,7 +124,7 @@ const CepheidsPage: FC = () => {
             <h3>Ошибка загрузки данных</h3>
             <p>{error}</p>
             <button
-              onClick={loadCepheids}
+              onClick={hasActiveSearch ? () => loadCepheidsWithFilter(activeFilters.titile!) : loadCepheids}
               className="retry-button"
               style={{
                 background: 'var(--primary-blue)',
@@ -144,7 +183,7 @@ const CepheidsPage: FC = () => {
         {loading ? (
           <Alert variant="info" className="loading-alert">
             <div className="loading-spinner"></div>
-            Загрузка цефеид...
+            {hasActiveSearch ? 'Поиск цефеид...' : 'Загрузка цефеид...'}
           </Alert>
         ) : (
           <>

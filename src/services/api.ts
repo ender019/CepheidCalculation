@@ -29,24 +29,41 @@ const apiRequest = async <T>(url: string, options: RequestInit = {}): Promise<T>
 
 // Сервис для работы с цефеидами
 export const cepheidService = {
-  async getCepheids(filters?: { 
-    query?: string;
-  }): Promise<Cepheid[]> {
+  async getCepheids(): Promise<Cepheid[]> {
     try {
-      const queryParams = new URLSearchParams();
-      if (filters?.query) queryParams.append('query', filters.query);
-      
-      const url = `/cepheid${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+      const url = `/cepheid`;
       
       return await apiRequest<Cepheid[]>(url);
     } catch (error) {
       console.warn('Используются mock-данные для цефеид:', error);
       let filtered = MOCK_CEPHEIDS;
       
+      return filtered;
+    }
+  },
+
+  async getCepheidsByFilter(filters: { 
+    query?: string;
+  }): Promise<Cepheid[]> {
+    try {
+      const queryParams = new URLSearchParams();
+      if (filters?.query) queryParams.append('query', filters.query);
+      
+      const url = `/cepheid/filter${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+      
+      return await apiRequest<Cepheid[]>(url);
+    } catch (error) {
+      console.warn('Используются mock-данные для фильтрованных цефеид:', error);
+      
+      // Fallback: фильтрация мок-данных
+      let filtered = MOCK_CEPHEIDS;
+      
       if (filters?.query) {
+        const query = filters.query.toLowerCase();
         filtered = filtered.filter(ceph => 
-          ceph.title.toLowerCase().includes(filters.query!.toLowerCase()) ||
-          (ceph.description && ceph.description.toLowerCase().includes(filters.query!.toLowerCase()))
+          ceph.title.toLowerCase().includes(query) ||
+          ceph.source.toLowerCase().includes(query) ||
+          ceph.period.toString().includes(filters.query!)
         );
       }
       
