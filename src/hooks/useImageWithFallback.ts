@@ -5,7 +5,6 @@ export const useImageWithFallback = (initialSrc: string, fallbackSrc: string = '
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    console.log(initialSrc)
     setSrc('/static'+initialSrc);
     setHasError(false);
   }, [initialSrc]);
