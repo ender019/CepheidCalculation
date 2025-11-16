@@ -4,11 +4,10 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs';
 import path from 'path';
 
-const host = 'localhost'
-// const host = '192.168.1.216'
+const host = '192.168.1.216'
 
 export default defineConfig({
-  base: "/Gilyazetdinov-RIP2025F", 
+  base: "/", 
   server: {
     // https:{
     //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
