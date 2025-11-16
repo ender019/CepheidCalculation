@@ -2,14 +2,33 @@
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "CepheidCalc",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "com.rip.myapp",
   "build": {
-    "frontendDist": "../build",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:3000",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
+  "plugins": {
+    "http": {
+      "enabled": true
+    },
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "http": {
+        "request": true,
+        "scope": [
+          "http://192.168.1.216:8080/**"
+        ]
+      }
+    }
+  },
   "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "title": "CepheidCalculator",
@@ -24,7 +43,6 @@
     }
   },
   "bundle": {
-    "active": true,
     "targets": "all",
     "icon": [
       "icons/32x32.png",
