@@ -225,7 +225,18 @@ const CepheidsPage: FC = () => {
             )}
           </>
         )}
+      
+        {/* Плавающая кнопка расчета */}
+        <a
+          href={ROUTES.CEPHEID_CALC}
+          className="floating-calculation-btn"
+          title="Просмотреть заявку"
+        >
+          <span className="floating-calculation-icon">📝</span>
+          <span className="floating-calculation-count">2</span>
+        </a>
       </Container>
+      
     </>
   );
 };

@@ -1,6 +1,6 @@
 // src/services/api.ts
-import type { Cepheid } from '../types/api';
-import { MOCK_CEPHEIDS } from './datas';
+import type { Cepheid, CepheidCalc, CepheidCalcListResponse } from '../types/api';
+import { MOCK_CEPHEIDS, MOCK_CEPHEID_CALC } from './datas';
 
 const prefix = 'https://192.168.1.216:3000/api/v1'
 // const prefix = '/api/v1'
@@ -80,6 +80,63 @@ export const cepheidService = {
     } catch (error) {
       console.warn('Используются mock-данные для цефеиды:', error);
       return MOCK_CEPHEIDS.find(ceph => ceph.id === id) || MOCK_CEPHEIDS[0];
+    }
+  },
+};
+
+// Сервис для работы с расчетами цефеид
+export const cepheidCalcService = {
+  async getCepheidCalcs(filters?: {
+    status?: number;
+    start?: string;
+    end?: string;
+  }): Promise<CepheidCalcListResponse[]> {
+    try {
+      const queryParams = new URLSearchParams();
+      if (filters?.status) queryParams.append('status', filters.status.toString());
+      if (filters?.start) queryParams.append('start', filters.start);
+      if (filters?.end) queryParams.append('end', filters.end);
+
+      const url = `/cepheid_calc${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+      return await apiRequest<CepheidCalcListResponse[]>(url);
+    } catch (error) {
+      console.warn('Используются mock-данные для расчетов:', error);
+      return [{
+        id: "1",
+        created_at: "2024-01-15",
+        ka: -2.81,
+        kb: -1.43
+      }];
+    }
+  },
+
+  async getCepheidCalcById(id: string): Promise<CepheidCalc> {
+    try {
+      return await apiRequest<CepheidCalc>(`/cepheid_calc/${id}`);
+    } catch (error) {
+      console.warn('Используются mock-данные для расчета:', error);
+      return MOCK_CEPHEID_CALC;
+    }
+  },
+
+  async getLastDraftCalc(): Promise<{ cepheid_calc_id: number; item_count: number }> {
+    try {
+      return await apiRequest<{ cepheid_calc_id: number; item_count: number }>('/cepheid_calc/last');
+    } catch (error) {
+      console.warn('Используются mock-данные для последнего расчета:', error);
+      return { cepheid_calc_id: 1, item_count: 2 };
+    }
+  },
+
+  async updateCepheidCalc(id: string, data: { ka: number; kb: number }): Promise<void> {
+    try {
+      await apiRequest(`/cepheid_calc/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.warn('Не удалось обновить расчет:', error);
+      throw error;
     }
   }
 };

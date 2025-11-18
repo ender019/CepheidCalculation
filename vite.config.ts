@@ -6,6 +6,7 @@ import path from 'path';
 
 // const host = 'localhost'
 const host = '192.168.1.216'
+const protocol = 'http'
 
 export default defineConfig({
   base: "/Gilyazetdinov-RIP2025F", 
@@ -18,16 +19,23 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api/v1': {
-        target: `http://${host}:8080`,
+        target: `${protocol}://${host}:8080`,
         changeOrigin: true,
         secure: false
       },
       '/static': {
-        target: `http://${host}:9000`,
+        target: `${protocol}://${host}:9000`,
         changeOrigin: true,
         secure: false
       },
     },
+
+    // Добавляем CORS headers для dev server
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization'
+    }
   },
   plugins: [
     react(),

@@ -1,4 +1,4 @@
-import type { Cepheid } from '../types/api';
+import type { Cepheid, CepheidCalc } from '../types/api';
 
 export const MOCK_CEPHEIDS: Cepheid[] = [
 	{
@@ -82,3 +82,13 @@ export const MOCK_CEPHEIDS: Cepheid[] = [
 	// 	description: "Долгопериодическая цефеида с точными параллаксами от Gaia",
 	// },
 ];
+
+
+
+export const MOCK_CEPHEID_CALC: CepheidCalc = {
+  id: "1",
+  created_at: "2024-01-15",
+  ka: -2.81,
+  kb: -1.43,
+  items: [MOCK_CEPHEIDS[0], MOCK_CEPHEIDS[1]]
+};

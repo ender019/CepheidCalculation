@@ -11,26 +11,6 @@ export interface Cepheid {
   distance?: number;
 }
 
-export interface CepheidCalc {
-  id: string;
-  created_at: string;
-  ka: number;
-  kb: number;
-  items: Cepheid[];
-  approved_at?: string;
-  closed_at?: string;
-}
-
-export interface CepheidCalcListResponse {
-  id: string;
-  created_at: string;
-  ka: number;
-  kb: number;
-  status?: string;
-  approved_at?: string;
-  closed_at?: string;
-}
-
 export interface Breadcrumb {
   label: string;
   path?: string;
