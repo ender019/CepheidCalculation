@@ -9,10 +9,10 @@ const host = '192.168.1.216'
 export default defineConfig({
   base: "/", 
   server: {
-    // https:{
-    //   key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
-    //   cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
-    // },
+    https:{
+      key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
+      cert: fs.readFileSync(path.resolve(__dirname, 'cert.crt')),
+    },
     host: '0.0.0.0',
     port: 3000,
     proxy: {
