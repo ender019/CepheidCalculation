@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs';
 import path from 'path';
 
-// const host = 'localhost'
 const host = '192.168.1.216'
 
 export default defineConfig({
@@ -16,6 +15,7 @@ export default defineConfig({
     },
     host: '0.0.0.0',
     port: 3000,
+    cors: true,
     proxy: {
       '/api/v1': {
         target: `http://${host}:8080`,
