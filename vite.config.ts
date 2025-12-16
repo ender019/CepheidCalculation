@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 import fs from 'fs';
 import path from 'path';
 
-const host = '192.168.1.216'
+const host = '192.168.43.245'
 
 export default defineConfig({
   base: "/Gilyazetdinov-RIP2025F", 
@@ -59,4 +59,17 @@ export default defineConfig({
       },
     }),
   ],
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web',
+    },
+  },
+  optimizeDeps: {
+    include: ['react-native-web'],
+    exclude: ['react-native'],
+  },
+  define: {
+    __DEV__: JSON.stringify(true),
+    global: {},
+  },
 })

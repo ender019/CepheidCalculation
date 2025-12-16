@@ -2,8 +2,9 @@
 import type { Cepheid } from '../types/api';
 import { MOCK_CEPHEIDS } from './datas';
 
-const prefix = 'https://192.168.1.216:3000/api/v1'
+const prefix = 'https://192.168.43.245:3000/api/v1'
 // const prefix = '/api/v1'
+const duration = 1000
 
 // Базовые функции для работы с API
 const apiRequest = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
@@ -17,7 +18,9 @@ const apiRequest = async <T>(url: string, options: RequestInit = {}): Promise<T>
   
 
   try {
-    const response = await fetch(`${prefix}${url}`, { ...defaultOptions, ...options });
+    const response = await fetch(`${prefix}${url}`, { ...defaultOptions,
+      signal: AbortSignal.timeout(duration) // Timeout after 'duration' milliseconds
+    , ...options });
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

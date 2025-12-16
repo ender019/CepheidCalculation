@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const host = "https://192.168.1.216:3000"
+const host = "https://192.168.43.245:3000/Gilyazetdinov-RIP2025F"
 
 export const useImageWithFallback = (initialSrc: string, fallbackSrc: string = '/Gilyazetdinov-RIP2025F/img/default-star.jpg') => {
   const [src, setSrc] = useState(initialSrc);
