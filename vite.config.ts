@@ -7,7 +7,7 @@ import path from 'path';
 const host = '192.168.43.245'
 
 export default defineConfig({
-  base: "/Gilyazetdinov-RIP2025F", 
+  base: "/CepheidCalculation", 
   server: {
     https:{
       key: fs.readFileSync(path.resolve(__dirname, 'cert.key')),
@@ -39,7 +39,7 @@ export default defineConfig({
       manifest: {
         name: "Cepheid App",
         short_name: "Cepheid",
-        start_url: "/Gilyazetdinov-RIP2025F",
+        start_url: "/CepheidCalculation",
         display: "standalone",
         background_color: "#fdfdfd",
         theme_color: "#db4938",

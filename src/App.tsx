@@ -21,7 +21,7 @@ function App() {
   }, [])
 
   return (
-    <BrowserRouter basename='/Gilyazetdinov-RIP2025F'>
+    <BrowserRouter basename='/CepheidCalculation'>
       <div className="App">
         <Navbar />
         <Routes>

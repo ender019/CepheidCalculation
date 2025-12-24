@@ -1,4 +1,4 @@
-import { type FC, useState, useEffect } from 'react';
+import { type FC, useState, useEffect, useMemo } from 'react'; // Добавили useMemo в импорт
 import { Container, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import type { Cepheid } from '../types/index';
@@ -11,7 +11,6 @@ import { setFilters, clearFilters } from '../store/slices/filterSlice';
 
 const CepheidsPage: FC = () => {
   const [cepheids, setCepheids] = useState<Cepheid[]>([]);
-  const [filteredCepheids, setFilteredCepheids] = useState<Cepheid[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -21,34 +20,23 @@ const CepheidsPage: FC = () => {
   const activeFilters = useAppSelector((state) => state.filters);
   const dispatch = useAppDispatch();
 
+  const hasActiveSearch = useMemo(() => {
+    return !!(activeFilters.titile && activeFilters.titile.trim() !== '');
+  }, [activeFilters.titile]);
+
+  // Обрабатываем изменения фильтров
   useEffect(() => {
     // Восстанавливаем поисковый запрос из Redux при загрузке
     if (activeFilters.titile) {
       setSearchQuery(activeFilters.titile);
     }
-    
-    // Загружаем данные в зависимости от наличия фильтров
+
     if (activeFilters.titile && activeFilters.titile.trim() !== '') {
       loadCepheidsWithFilter(activeFilters.titile);
     } else {
       loadCepheids();
     }
-  }, []);
-
-  // Обрабатываем изменения фильтров
-  useEffect(() => {
-    if (activeFilters.titile && activeFilters.titile.trim() !== '') {
-      loadCepheidsWithFilter(activeFilters.titile);
-    } else {
-      // Если фильтр очистили, загружаем все данные
-      if (cepheids.length === 0) {
-        loadCepheids();
-      } else {
-        // Или просто показываем все загруженные данные
-        setFilteredCepheids(cepheids);
-      }
-    }
-  }, [activeFilters, cepheids]);
+  }, [activeFilters]);
 
   const loadCepheids = async () => {
     setLoading(true);
@@ -56,7 +44,6 @@ const CepheidsPage: FC = () => {
     try {
       const data = await cepheidService.getCepheids();
       setCepheids(data);
-      setFilteredCepheids(data);
     } catch (err) {
       console.error('Ошибка загрузки цефеид:', err);
       setError('Не удалось загрузить данные цефеид');
@@ -69,25 +56,11 @@ const CepheidsPage: FC = () => {
     setLoading(true);
     setError(null);
     try {
-      // Предполагаем, что у cepheidService есть метод getCepheidsByFilter
-      const data = await cepheidService.getCepheidsByFilter({ query });
-      setFilteredCepheids(data);
-      
-      // Также обновляем основной список, если нужно
-      if (cepheids.length === 0) {
-        setCepheids(data);
-      }
+      const data = await cepheidService.getCepheidsByFilter({query: query});
+      setCepheids(data);
     } catch (err) {
-      console.error('Ошибка загрузки отфильтрованных цефеид:', err);
-      setError('Не удалось загрузить отфильтрованные данные');
-      
-      // Fallback: фильтруем локально, если API не поддерживает фильтрацию
-      const filtered = cepheids.filter(cepheid =>
-        cepheid.title.toLowerCase().includes(query.toLowerCase()) ||
-        cepheid.source.toLowerCase().includes(query.toLowerCase()) ||
-        cepheid.period.toString().includes(query)
-      );
-      setFilteredCepheids(filtered);
+      console.error('Ошибка загрузки цефеид:', err);
+      setError('Не удалось загрузить данные цефеид');
     } finally {
       setLoading(false);
     }
@@ -110,8 +83,6 @@ const CepheidsPage: FC = () => {
   const handleDetailsClick = (cepheidId: string) => {
     navigate(`${ROUTES.CEPHEID}/${cepheidId}`);
   };
-
-  const hasActiveSearch = activeFilters.titile && activeFilters.titile.trim() !== '';
 
   if (error) {
     return (
@@ -165,7 +136,7 @@ const CepheidsPage: FC = () => {
             <button type="submit" className="search-btn">Найти</button>
           </form>
 
-          {hasActiveSearch && (
+          {hasActiveSearch && cepheids.length > 0 && (
             <div className="search-controls">
               <button
                 className="clear-search-btn"
@@ -174,7 +145,7 @@ const CepheidsPage: FC = () => {
                 Сбросить поиск
               </button>
               <div className="search-results-info">
-                Найдено: {filteredCepheids.length} цефеид
+                Найдено: {cepheids.length} цефеид
               </div>
             </div>
           )}
@@ -188,7 +159,7 @@ const CepheidsPage: FC = () => {
         ) : (
           <>
             <div className="cepheids-grid">
-              {filteredCepheids.map(cepheid => (
+              {cepheids.map(cepheid => (
                 <CepheidCard
                   key={cepheid.id}
                   cepheid={cepheid}
@@ -197,7 +168,7 @@ const CepheidsPage: FC = () => {
               ))}
             </div>
 
-            {filteredCepheids.length === 0 && !loading && (
+            {cepheids.length === 0 && !loading && (
               <div className="no-results">
                 <Alert variant="warning">
                   <h3>Цефеиды не найдены</h3>
